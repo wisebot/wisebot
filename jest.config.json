@@ -1,0 +1,9 @@
+{
+	"name": "Wisebot",
+	"testEnvironment": "node",
+	"moduleFileExtensions": ["mjs", "js", "json"],
+	"testRegex": "./packages/[^/]+/test/.+\\.test\\.mjs$",
+	"transform": {
+		"^.+\\.mjs$": "babel-jest"
+	}
+}

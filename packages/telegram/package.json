@@ -1,0 +1,28 @@
+{
+	"name": "@wisebot/telegram",
+	"version": "0.0.0",
+	"description": "🤖📡 The Telegram platform for wisebot",
+	"main": "lib/index.js",
+	"module": "lib/index.mjs",
+	"license": "MIT",
+	"author": "Negezor <negezor@gmail.com>",
+	"engines": {
+		"node": ">=10"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wisebot/wisebot.git"
+	},
+	"keywords": [
+		"wisebot",
+		"bot"
+	],
+	"bugs": {
+		"url": "https://github.com/wisebot/wisebot/issues"
+	},
+	"homepage": "https://github.com/wisebot/wisebot#readme",
+	"dependencies": {},
+	"peerDependencies": {
+		"@wisebot/wisebot": "*"
+	}
+}
