@@ -2,8 +2,8 @@
 	"name": "wisebot",
 	"private": true,
 	"scripts": {
-		"build": "rollup -c",
-		"test": "jest --config jest.config.json"
+		"build": "cross-env NODE_ENV=production rollup -c",
+		"test": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0-beta.46",
@@ -12,12 +12,12 @@
 		"@babel/preset-env": "^7.0.0-beta.46",
 		"@babel/register": "^7.0.0-beta.46",
 		"babel-core": "^7.0.0-0",
-		"babel-jest": "^23.0.0-charlie.1",
+		"babel-jest": "^22.4.3",
+		"cross-env": "^5.1.4",
 		"eslint": "^5.0.0-alpha.2",
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-plugin-import": "^2.11.0",
-		"jest": "^23.0.0-charlie.1",
-		"lerna": "^3.0.0-beta.19",
+		"jest": "^22.4.3",
 		"rollup": "^0.58.2",
 		"rollup-plugin-babel": "^4.0.0-beta.4",
 		"rollup-plugin-commonjs": "^9.1.3",

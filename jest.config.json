@@ -1,9 +1,10 @@
 {
 	"name": "Wisebot",
+	"verbose": true,
 	"testEnvironment": "node",
 	"moduleFileExtensions": ["mjs", "js", "json"],
 	"testRegex": "./packages/[^/]+/test/.+\\.test\\.mjs$",
 	"transform": {
-		"^.+\\.mjs$": "babel-jest"
+		"^.+\\.mjs$": "<rootDir>/jest.preprocess.js"
 	}
 }
