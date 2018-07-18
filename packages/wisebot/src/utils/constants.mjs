@@ -1,3 +1,15 @@
-export const ROOT = '/';
+export const symbols = {
+	INSTALL: Symbol('Install ')
+};
 
-export const SRC = '/src';
+export const defaultOptions = {
+
+};
+
+export const contextTypes = {
+	MESSAGE: 'message'
+};
+
+export const contextSubTypes = {
+
+};

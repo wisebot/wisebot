@@ -21,8 +21,10 @@
 		"url": "https://github.com/wisebot/wisebot/issues"
 	},
 	"homepage": "https://github.com/wisebot/wisebot#readme",
-	"dependencies": {},
-	"peerDependencies": {
-		"@wisebot/wisebot": "*"
+	"dependencies": {
+		"chalk": "^2.4.1",
+		"debug": "^3.1.0",
+		"middleware-io": "^0.0.6",
+		"uuid": "^3.3.2"
 	}
 }

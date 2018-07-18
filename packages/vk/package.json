@@ -21,7 +21,9 @@
 		"url": "https://github.com/wisebot/wisebot/issues"
 	},
 	"homepage": "https://github.com/wisebot/wisebot#readme",
-	"dependencies": {},
+	"dependencies": {
+		"vk-io": "^4.0.0-rc.0"
+	},
 	"peerDependencies": {
 		"@wisebot/wisebot": "*"
 	}

@@ -13,6 +13,8 @@ import TelegramPackage from './packages/telegram/package.json';
 import DiscordPackage from './packages/discord/package.json';
 import VKPackage from './packages/vk/package.json';
 
+const babelrc = require('./.babelrc');
+
 const ROOT_PACKAGES = nodePath.join(__dirname, 'packages');
 
 const packages = [
@@ -40,9 +42,13 @@ export default packages.map(pack => ({
 	plugins: [
 		json(),
 		babel({
+			...babelrc,
+
 			exclude: [
 				'node_modules/**'
 			],
+
+			babelrc: false
 		}),
 		resolve({
 			extensions: ['.mjs', '.js'],
@@ -58,7 +64,8 @@ export default packages.map(pack => ({
 		'http',
 		'util',
 		'url',
-		'fs'
+		'fs',
+		'os'
 	],
 	output: [
 		{

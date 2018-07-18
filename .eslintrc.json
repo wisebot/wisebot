@@ -1,9 +1,9 @@
 {
-    "root": true,
+	"root": true,
 	"env": {
 		"node": true
 	},
-    "extends": "airbnb-base",
+	"extends": "airbnb-base",
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
@@ -15,7 +15,7 @@
 			}
 		}
 	},
-    "rules": {
+	"rules": {
 		"import/extensions": [
 			"error",
 			"always",
@@ -24,19 +24,18 @@
 				"js": "never"
 			}
 		],
+		"class-methods-use-this": 0,
 		"comma-dangle": 0,
 		"no-tabs": 0,
-        "indent": [
+		"indent": [
 			"error",
 			"tab"
 		]
-    },
-	"overrides": [
-		{
-			"files": ["packages/*/test/**/*.mjs"],
-			"env": {
-				"jest": true
-			}
+	},
+	"overrides": [{
+		"files": ["packages/*/test/**/*.mjs"],
+		"env": {
+			"jest": true
 		}
-	]
+	}]
 }

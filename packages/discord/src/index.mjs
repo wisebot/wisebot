@@ -1,1 +1,3 @@
-export default {};
+import DiscordService from './service';
+
+export default DiscordService;
