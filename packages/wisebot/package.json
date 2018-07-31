@@ -24,7 +24,7 @@
 	"dependencies": {
 		"chalk": "^2.4.1",
 		"debug": "^3.1.0",
-		"middleware-io": "^0.0.6",
+		"middleware-io": "^0.0.7",
 		"uuid": "^3.3.2"
 	}
 }
