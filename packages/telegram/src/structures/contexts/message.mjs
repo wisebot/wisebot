@@ -5,7 +5,7 @@ import {
 	contextActions
 } from '@wisebot/wisebot';
 
-export default class VKMessageContext extends MessageContext {
+export default class TelegramMessageContext extends MessageContext {
 	/**
 	 * Constructor
 	 *
@@ -33,7 +33,7 @@ export default class VKMessageContext extends MessageContext {
 	send(options) {
 		const { payload } = this;
 
-		const context = new VKMessageContext(
+		const context = new TelegramMessageContext(
 			{
 				service: this.service,
 				state: this.state,

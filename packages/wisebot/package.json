@@ -2,29 +2,33 @@
 	"name": "@wisebot/wisebot",
 	"version": "0.0.0",
 	"description": "🤖💬 Universal multi platform bot",
-	"main": "lib/index.js",
-	"module": "lib/index.mjs",
 	"license": "MIT",
-	"author": "Negezor <negezor@gmail.com>",
-	"engines": {
-		"node": ">=10"
+	"author": {
+		"name": "Negezor",
+		"email": "negezor@gmail.com"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/wisebot/wisebot.git"
 	},
+	"homepage": "https://github.com/wisebot/wisebot#readme",
+	"bugs": "https://github.com/wisebot/wisebot/issues",
 	"keywords": [
 		"wisebot",
 		"bot"
 	],
-	"bugs": {
-		"url": "https://github.com/wisebot/wisebot/issues"
+	"files": [
+		"lib"
+	],
+	"main": "lib/index",
+	"module": "lib/index.mjs",
+	"engines": {
+		"node": ">=10"
 	},
-	"homepage": "https://github.com/wisebot/wisebot#readme",
 	"dependencies": {
 		"chalk": "^2.4.1",
-		"debug": "^3.1.0",
-		"middleware-io": "^0.0.7",
+		"debug": "^4.1.0",
+		"middleware-io": "^0.0.8",
 		"uuid": "^3.3.2"
 	}
 }

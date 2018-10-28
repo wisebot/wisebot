@@ -1,10 +1,18 @@
 export default class WisebotAdapter {
+	constructor() {
+		this.options = {};
+	}
+
 	/**
-	 * Returns the adapter client
+	 * Sets options
 	 *
-	 * @return {Object}
+	 * @param {Object} options
+	 *
+	 * @return {this}
 	 */
-	getClient() {
-		return this.client;
+	setOptions(options) {
+		Object.assign(this.options, options);
+
+		return this;
 	}
 }

@@ -4,21 +4,16 @@ import { inspectCustomData } from '../../utils/constants';
 
 const { inspect } = nodeUtil;
 
-/**
- * General context class
- *
- * @public
- */
-export default class WisebotContext {
+export default class WisebotAttachment {
 	/**
 	 * Constructor
 	 *
 	 * @param {Object} payload
 	 */
-	constructor({ payload = {}, state = {} }) {
+	constructor({ payload = {}, raw }) {
 		this.payload = payload;
 
-		this.state = state;
+		this.raw = raw;
 	}
 
 	/**
@@ -31,7 +26,7 @@ export default class WisebotContext {
 	}
 
 	/**
-	 * Returns the context type
+	 * Returns the attachment type
 	 *
 	 * @return {string}
 	 */
@@ -40,39 +35,12 @@ export default class WisebotContext {
 	}
 
 	/**
-	 * Returns the context sub types
-	 *
-	 * @return {string[]}
-	 */
-	get subTypes() {
-		return this.payload.subTypes;
-	}
-
-	/**
-	 * Checks whether the context of some of these types
-	 *
-	 * @param {string[]} types
-	 *
-	 * @return {boolean}
-	 */
-	is(types) {
-		if (Array.isArray(types)) {
-			// eslint-disable-next-line no-param-reassign
-			types = [types];
-		}
-
-		return [this.type, ...this.subTypes].some(typeName => (
-			types.includes(typeName)
-		));
-	}
-
-	/**
 	 * Returns the custom data
 	 *
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
-		const { ...payload } = this;
+		const { payload } = this;
 
 		return { payload };
 	}
@@ -91,9 +59,7 @@ export default class WisebotContext {
 		const customData = {
 			...this[inspectCustomData](),
 
-			type: this.type,
-			subTypes: this.subTypes,
-			state: this.state
+			type: this.type
 		};
 
 		const payload = inspect(customData, {

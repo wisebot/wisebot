@@ -20,16 +20,11 @@ export default class WisebotService {
 	setOptions(options) {
 		Object.assign(this.options, options);
 
-		return this;
-	}
+		if (options.adapter) {
+			this.adapter.setOptions(options.adapter);
+		}
 
-	/**
-	 * Returns the adapter
-	 *
-	 * @return {WisebotAdapter}
-	 */
-	getAdapter() {
-		return this.adapter;
+		return this;
 	}
 
 	/**
@@ -37,7 +32,13 @@ export default class WisebotService {
 	 *
 	 * @return {string}
 	 */
-	getServiceId() {
+	get serviceId() {
+		if (!this.options.serviceId) {
+			generateServiceWarning(this.serviceName, 'Set the service identifier in the serviceId option, because by default it will be random');
+
+			this.options.serviceId = generateServiceId();
+		}
+
 		return this.options.serviceId;
 	}
 
@@ -46,20 +47,27 @@ export default class WisebotService {
 	 *
 	 * @return {string}
 	 */
-	getServiceName() {
+	get serviceName() {
 		throw new Error('Override the method with service name');
 	}
 
 	/**
-	 * Performs actions to start
+	 * Runs the middleware chain outgoing
 	 *
 	 * @return {Promise}
 	 */
-	async connect() {
-		if (!this.options.serviceId) {
-			generateServiceWarning(this.getServiceName(), 'Set the service identifier in the serviceId option, because by default it will be random');
+	async dispatchOutgoing() {
+		throw new Error('Method is not implemented');
+	}
 
-			this.options.serviceId = generateServiceId();
-		}
+	/**
+	 * Send outgoing context
+	 *
+	 * @param {Context} context
+	 *
+	 * @return {Promise}
+	 */
+	async sendOutgoing() {
+		throw new Error('Method is not implemented');
 	}
 }

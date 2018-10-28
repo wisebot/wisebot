@@ -1,6 +1,7 @@
-import Middleware from 'middleware-io/lib';
+import Middleware from 'middleware-io';
 
-import WisebotError from '../../errors';
+import { WisebotError } from '../../errors';
+import { middlewarePriority } from '../../utils/constants';
 
 export default class IncomingMiddleware {
 	/**
@@ -19,8 +20,16 @@ export default class IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	use(ware) {
-		const hasName = this.stack.some(middleware => middleware.name === ware.name);
+	use({
+		name,
+		description = null,
+
+		enabled = true,
+		priority = middlewarePriority.DEFAULT,
+
+		handler
+	}) {
+		const hasName = this.stack.some(middleware => middleware.name === name);
 
 		if (hasName) {
 			throw new WisebotError({
@@ -28,9 +37,19 @@ export default class IncomingMiddleware {
 			});
 		}
 
-		this.stack.push(ware);
+		this.stack.push({
+			name,
+			description,
 
-		this.reload();
+			enabled,
+			priority,
+
+			handler
+		});
+
+		if (enabled) {
+			this.reload();
+		}
 
 		return this;
 	}

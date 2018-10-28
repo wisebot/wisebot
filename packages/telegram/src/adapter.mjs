@@ -1,4 +1,4 @@
-import VK from 'vk-io';
+import Telegraf from 'telegraf';
 import {
 	WisebotAdapter,
 	UnsupportedContextTypeError,
@@ -6,11 +6,11 @@ import {
 	contextTypes
 } from '@wisebot/wisebot';
 
-export default class VKAdapter extends WisebotAdapter {
-	constructor(options) {
-		super(options);
+export default class TelegramAdapter extends WisebotAdapter {
+	constructor() {
+		super();
 
-		this.client = new VK();
+		this.client = new Telegraf();
 	}
 
 	/**
@@ -27,6 +27,10 @@ export default class VKAdapter extends WisebotAdapter {
 			this.client.token = options.token;
 		}
 
+		if (options.agent) {
+			this.client.telegram.options.agent = options.agent;
+		}
+
 		return this;
 	}
 
@@ -38,10 +42,10 @@ export default class VKAdapter extends WisebotAdapter {
 		}
 
 		const params = {
-			peer_id: context.to.id,
-			message: context.text
+			chat_id: context.to.id,
+			text: context.text
 		};
 
-		await this.client.api.messages.send(params);
+		await this.client.telegram.callApi('sendMessage', params);
 	}
 }

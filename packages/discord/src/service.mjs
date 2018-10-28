@@ -18,7 +18,7 @@ export default class DiscordService extends WisebotService {
 	/**
 	 * @implements
 	 */
-	getServiceName() {
+	get serviceName() {
 		return SERVICE_NAME;
 	}
 }

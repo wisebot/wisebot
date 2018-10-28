@@ -13,7 +13,7 @@ import TelegramPackage from './packages/telegram/package.json';
 import DiscordPackage from './packages/discord/package.json';
 import VKPackage from './packages/vk/package.json';
 
-const babelrc = require('./.babelrc');
+const babelrc = require('./babel.config');
 
 const ROOT_PACKAGES = nodePath.join(__dirname, 'packages');
 
@@ -51,7 +51,6 @@ export default packages.map(pack => ({
 			babelrc: false
 		}),
 		resolve({
-			extensions: ['.mjs', '.js'],
 			preferBuiltins: true
 		}),
 		commonjs()
@@ -69,13 +68,13 @@ export default packages.map(pack => ({
 	],
 	output: [
 		{
-			file: nodePath.join(ROOT_PACKAGES, pack.name, pack.pkg.main),
+			file: nodePath.join(ROOT_PACKAGES, pack.name, `${pack.pkg.main}.js`),
 			format: 'cjs',
 			exports: 'named'
 		},
 		{
-			file: nodePath.join(ROOT_PACKAGES, pack.name, pack.pkg.module),
-			format: 'es'
+			file: nodePath.join(ROOT_PACKAGES, pack.name, `${pack.pkg.main}.mjs`),
+			format: 'esm'
 		}
 	]
 }));

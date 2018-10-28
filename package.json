@@ -4,27 +4,29 @@
 	"workspaces": [
 		"packages/*"
 	],
-	"scripts": {
-		"watch": "npm run build -- --watch",
-		"build": "cross-env NODE_ENV=production rollup -c",
-		"test": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache"
+	"engines": {
+		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.0.0-beta.55",
-		"@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.55",
-		"@babel/preset-env": "^7.0.0-beta.55",
-		"@babel/register": "^7.0.0-beta.55",
+		"@babel/core": "^7.1.2",
+		"@babel/preset-env": "^7.1.0",
 		"babel-core": "^7.0.0-0",
-		"babel-jest": "^23.4.2",
+		"babel-jest": "^23.6.0",
 		"cross-env": "^5.2.0",
-		"eslint": "^5.2.0",
-		"eslint-config-airbnb-base": "^13.0.0",
-		"eslint-plugin-import": "^2.13.0",
-		"jest": "^23.4.2",
-		"rollup": "^0.63.4",
-		"rollup-plugin-babel": "4.0.0-beta.7",
-		"rollup-plugin-commonjs": "^9.1.4",
-		"rollup-plugin-json": "^3.0.0",
-		"rollup-plugin-node-resolve": "^3.3.0"
+		"eslint": "^5.7.0",
+		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint-plugin-import": "^2.14.0",
+		"jest": "^23.6.0",
+		"rollup": "^0.66.6",
+		"rollup-plugin-babel": "^4.0.3",
+		"rollup-plugin-commonjs": "^9.2.0",
+		"rollup-plugin-json": "^3.1.0",
+		"rollup-plugin-node-resolve": "^3.4.0"
+	},
+	"scripts": {
+		"watch": "yarn run build --watch",
+		"build": "cross-env NODE_ENV=production rollup -c",
+		"test": "yarn run test:jest",
+		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache"
 	}
 }
