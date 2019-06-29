@@ -13,6 +13,8 @@ import TelegramPackage from './packages/telegram/package.json';
 import DiscordPackage from './packages/discord/package.json';
 import VKPackage from './packages/vk/package.json';
 
+import I18nPackage from './packages/i18n/package.json';
+
 const babelrc = require('./babel.config');
 
 const ROOT_PACKAGES = nodePath.join(__dirname, 'packages');
@@ -34,6 +36,10 @@ const packages = [
 	{
 		name: 'vk',
 		pkg: VKPackage
+	},
+	{
+		name: 'i18n',
+		pkg: I18nPackage
 	}
 ];
 
@@ -60,11 +66,13 @@ export default packages.map(pack => ({
 		'crypto',
 		'stream',
 		'https',
+		'path',
 		'http',
 		'util',
 		'url',
 		'fs',
-		'os'
+		'os',
+		'vm'
 	],
 	output: [
 		{

@@ -1,8 +1,7 @@
-import { WisebotService } from '@wisebot/wisebot';
+import { WisebotService, MessageContext } from '@wisebot/wisebot';
 
 import VKAdapter from './adapter';
 
-import { VKMessageContext } from './structures/contexts';
 import { transformMessage } from './structures/transforms';
 
 import { defaultOptions, SERVICE_NAME } from './utils/constants';
@@ -33,7 +32,7 @@ export default class VKService extends WisebotService {
 				serviceId: this.serviceId
 			});
 
-			const context = new VKMessageContext({
+			const context = new MessageContext({
 				service: this,
 				payload,
 				raw
@@ -43,7 +42,7 @@ export default class VKService extends WisebotService {
 		});
 
 		this.onIncoming = () => {};
-		this.onOutcoming = context => this.sendOutgoing(context);
+		this.onOutgoing = context => this.adapter.sendOutgoing(context);
 	}
 
 	/**
@@ -105,7 +104,7 @@ export default class VKService extends WisebotService {
 	 * @return {Promise}
 	 */
 	dispatchOutgoing(context) {
-		return this.onOutcoming(context);
+		return this.onOutgoing(context);
 	}
 
 	/**
@@ -124,6 +123,6 @@ export default class VKService extends WisebotService {
 			throw new TypeError('outgoing should be function');
 		}
 
-		this.onOutcoming = outgoing;
+		this.onOutgoing = outgoing;
 	}
 }

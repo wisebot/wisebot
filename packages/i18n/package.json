@@ -1,7 +1,7 @@
 {
-	"name": "@wisebot/telegram",
+	"name": "@wisebot/i18n",
 	"version": "0.0.0",
-	"description": "🤖📡 The Telegram platform for wisebot",
+	"description": "🤖💬 The i18n for wisebot",
 	"license": "MIT",
 	"author": {
 		"name": "Negezor",
@@ -26,7 +26,8 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"telegraf": "^3.25.0"
+		"debug": "^4.1.0",
+		"yaml": "^1.0.3"
 	},
 	"peerDependencies": {
 		"@wisebot/wisebot": "*"

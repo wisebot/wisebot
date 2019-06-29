@@ -1,8 +1,29 @@
 import WisebotContext from './context';
 
-import { contextTypes, inspectCustomData } from '../../utils/constants';
+import {
+	contextTypes,
+	contextActions,
+	inspectCustomData
+} from '../../utils/constants';
 
 export default class MessageContext extends WisebotContext {
+	/**
+	 * Constructor
+	 *
+	 * @param {Object} payload
+	 */
+	constructor({
+		service,
+		payload,
+		state,
+		raw
+	}) {
+		super({ payload, state });
+
+		this.raw = raw;
+		this.service = service;
+	}
+
 	/**
 	 * @implements
 	 */
@@ -71,6 +92,69 @@ export default class MessageContext extends WisebotContext {
 	 */
 	async toSchema() {
 		throw new Error('Not implemented');
+	}
+
+	/**
+	 * Sends a message
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {Promise<Object>}
+	 */
+	send(options) {
+		const { payload } = this;
+
+		let attachments;
+		if (options.attachments) {
+			attachments = !Array.isArray(options.attachments)
+				? [options.attachments]
+				: options.attachments;
+		} else {
+			attachments = [];
+		}
+
+		const context = new MessageContext(
+			{
+				service: this.service,
+				state: this.state,
+				raw: this.raw,
+
+				payload: {
+					action: contextActions.CREATE,
+
+					type: contextTypes.MESSAGE,
+					subTypes: [],
+
+					service: payload.service,
+
+					from: payload.from,
+					to: payload.from,
+
+					object: {
+						text: options.text,
+						attachments
+					}
+				}
+			}
+		);
+
+		return this.service.dispatchOutgoing(context);
+	}
+
+	/**
+	 * Sends a text
+	 *
+	 * @param {string} text
+	 * @param {Object} [options={}]
+	 *
+	 * @return {Promise<Object>}
+	 */
+	sendText(text, options = {}) {
+		return this.send({
+			text,
+
+			...options
+		});
 	}
 
 	/**

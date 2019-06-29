@@ -56,7 +56,7 @@ export default class WisebotContext {
 	 * @return {boolean}
 	 */
 	is(types) {
-		if (Array.isArray(types)) {
+		if (!Array.isArray(types)) {
 			// eslint-disable-next-line no-param-reassign
 			types = [types];
 		}

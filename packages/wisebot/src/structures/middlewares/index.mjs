@@ -1,4 +1,4 @@
 import IncomingMiddleware from './incoming';
-import OutcomingMiddleware from './outcoming';
+import OutgoingMiddleware from './outgoing';
 
-export { IncomingMiddleware, OutcomingMiddleware };
+export { IncomingMiddleware, OutgoingMiddleware };

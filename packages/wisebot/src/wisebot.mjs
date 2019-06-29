@@ -2,7 +2,7 @@ import { WisebotError } from './errors';
 
 import { defaultOptions } from './utils/constants';
 
-import { IncomingMiddleware, OutcomingMiddleware } from './structures/middlewares';
+import { IncomingMiddleware, OutgoingMiddleware } from './structures/middlewares';
 
 export default class Wisebot {
 	/**
@@ -14,7 +14,7 @@ export default class Wisebot {
 		this.options = { ...defaultOptions };
 
 		this.incoming = new IncomingMiddleware();
-		this.outcoming = new OutcomingMiddleware();
+		this.outgoing = new OutgoingMiddleware();
 
 		this.services = new Set();
 
@@ -48,6 +48,21 @@ export default class Wisebot {
 
 		this.services.add(service);
 
-		service.subscribe({});
+		service.subscribe({
+			incoming: context => (
+				this.incoming.send(context)
+			),
+			outgoing: async (context) => {
+				const { finished } = await this.outgoing.send(context);
+
+				if (!finished) {
+					return null;
+				}
+
+				const response = await service.adapter.sendOutgoing(context);
+
+				return response;
+			}
+		});
 	}
 }

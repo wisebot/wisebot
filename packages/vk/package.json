@@ -26,7 +26,7 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"vk-io": "^4.0.0-rc.7"
+		"vk-io": "^4.0.0-rc.9"
 	},
 	"peerDependencies": {
 		"@wisebot/wisebot": "*"

@@ -1,8 +1,7 @@
-import { WisebotService } from '@wisebot/wisebot';
+import { WisebotService, MessageContext } from '@wisebot/wisebot';
 
 import TelegramAdapter from './adapter';
 
-import { TelegramMessageContext } from './structures/contexts';
 import { transformMessage } from './structures/transforms';
 
 import { defaultOptions, SERVICE_NAME } from './utils/constants';
@@ -29,7 +28,7 @@ export default class TelegramService extends WisebotService {
 				serviceId: this.serviceId
 			});
 
-			const context = new TelegramMessageContext({
+			const context = new MessageContext({
 				service: this,
 				payload,
 				raw
@@ -39,7 +38,7 @@ export default class TelegramService extends WisebotService {
 		});
 
 		this.onIncoming = () => {};
-		this.onOutcoming = context => this.sendOutgoing(context);
+		this.onOutgoing = context => this.adapter.sendOutgoing(context);
 	}
 
 	/**
@@ -90,7 +89,7 @@ export default class TelegramService extends WisebotService {
 	 * @return {Promise}
 	 */
 	dispatchOutgoing(context) {
-		return this.onOutcoming(context);
+		return this.onOutgoing(context);
 	}
 
 	/**
@@ -109,6 +108,6 @@ export default class TelegramService extends WisebotService {
 			throw new TypeError('outgoing should be function');
 		}
 
-		this.onOutcoming = outgoing;
+		this.onOutgoing = outgoing;
 	}
 }

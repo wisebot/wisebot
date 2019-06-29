@@ -2,15 +2,6 @@ import { generateServiceId, generateServiceWarning } from './utils/helpers';
 
 export default class WisebotService {
 	/**
-	 * Returns options
-	 *
-	 * @return {Object}
-	 */
-	getOptions() {
-		return this.options;
-	}
-
-	/**
 	 * Sets options
 	 *
 	 * @param {Object} options
@@ -57,17 +48,6 @@ export default class WisebotService {
 	 * @return {Promise}
 	 */
 	async dispatchOutgoing() {
-		throw new Error('Method is not implemented');
-	}
-
-	/**
-	 * Send outgoing context
-	 *
-	 * @param {Context} context
-	 *
-	 * @return {Promise}
-	 */
-	async sendOutgoing() {
 		throw new Error('Method is not implemented');
 	}
 }
