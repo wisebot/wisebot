@@ -1,88 +1,76 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import jsonPlugin from 'rollup-plugin-json';
+import typescriptPlugin from 'rollup-plugin-typescript2';
 /* eslint-enable import/no-extraneous-dependencies */
 
-import nodePath from 'path';
+import { tmpdir } from 'os';
+// @ts-ignore
+import { builtinModules } from 'module';
+import { join as pathJoin } from 'path';
 
-import WisebotPackage from './packages/wisebot/package.json';
-
-import TelegramPackage from './packages/telegram/package.json';
-import DiscordPackage from './packages/discord/package.json';
-import VKPackage from './packages/vk/package.json';
-
-import I18nPackage from './packages/i18n/package.json';
-
-const babelrc = require('./babel.config');
-
-const ROOT_PACKAGES = nodePath.join(__dirname, 'packages');
-
-const packages = [
-	{
-		name: 'wisebot',
-		pkg: WisebotPackage
-	},
-
-	{
-		name: 'telegram',
-		pkg: TelegramPackage
-	},
-	{
-		name: 'discord',
-		pkg: DiscordPackage
-	},
-	{
-		name: 'vk',
-		pkg: VKPackage
-	},
-	{
-		name: 'i18n',
-		pkg: I18nPackage
-	}
+const MODULES = [
+	'wisebot',
+	'schema',
+	'vk'
 ];
 
-export default packages.map(pack => ({
-	input: nodePath.join(ROOT_PACKAGES, pack.name, 'src/index.mjs'),
-	plugins: [
-		json(),
-		babel({
-			...babelrc,
+const coreModules = builtinModules.filter((name) => (
+	!/(^_|\/)/.test(name)
+));
 
-			exclude: [
-				'node_modules/**'
-			],
+const cacheRoot = pathJoin(tmpdir(), '.rpt2_cache');
 
-			babelrc: false
-		}),
-		resolve({
-			preferBuiltins: true
-		}),
-		commonjs()
-	],
-	external: [
-		...Object.keys(pack.pkg.dependencies),
-		'crypto',
-		'stream',
-		'https',
-		'path',
-		'http',
-		'util',
-		'url',
-		'fs',
-		'os',
-		'vm'
-	],
-	output: [
-		{
-			file: nodePath.join(ROOT_PACKAGES, pack.name, `${pack.pkg.main}.js`),
-			format: 'cjs',
-			exports: 'named'
-		},
-		{
-			file: nodePath.join(ROOT_PACKAGES, pack.name, `${pack.pkg.main}.mjs`),
-			format: 'esm'
-		}
-	]
-}));
+const getModulePath = (path) => (
+	pathJoin(__dirname, 'packages', path)
+);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function () {
+	return Promise.all(
+		MODULES
+			.map(getModulePath)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.map(async (modulePath) => {
+				const modulePkg = await import(
+					pathJoin(modulePath, 'package.json')
+				);
+
+				const src = pathJoin(modulePath, 'src');
+				const lib = pathJoin(modulePath, 'lib');
+
+				return {
+					input: pathJoin(src, 'index.ts'),
+					plugins: [
+						jsonPlugin(),
+						typescriptPlugin({
+							cacheRoot,
+
+							useTsconfigDeclarationDir: false,
+
+							tsconfigOverride: {
+								outDir: lib,
+								rootDir: src,
+								include: [src]
+							}
+						})
+					],
+					external: [
+						...Object.keys(modulePkg.dependencies || {}),
+						...Object.keys(modulePkg.peerDependencies || {}),
+						...coreModules
+					],
+					output: [
+						{
+							file: pathJoin(modulePath, `${modulePkg.main}.js`),
+							format: 'cjs',
+							exports: 'named'
+						}
+						// {
+						// 	file: pathJoin(modulePath, `${modulePkg.main}.mjs`),
+						// 	format: 'esm'
+						// }
+					]
+				};
+			})
+	);
+}

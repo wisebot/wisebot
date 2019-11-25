@@ -1,10 +1,11 @@
 {
 	"name": "@wisebot/vk",
-	"version": "0.0.0",
+	"private": true,
+	"version": "0.0.0-alpha.01",
 	"description": "🤖📡 The VK platform for wisebot",
 	"license": "MIT",
 	"author": {
-		"name": "Negezor",
+		"name": "Vladlen (Negezor)",
 		"email": "negezor@gmail.com"
 	},
 	"repository": {
@@ -22,11 +23,12 @@
 	],
 	"main": "lib/index",
 	"module": "lib/index.mjs",
+	"types": "./lib/index.d.ts",
 	"engines": {
-		"node": ">=10"
+		"node": ">=12.0.0"
 	},
 	"dependencies": {
-		"vk-io": "^4.0.0-rc.9"
+		"vk-io": "^4.0.0-rc.29"
 	},
 	"peerDependencies": {
 		"@wisebot/wisebot": "*"

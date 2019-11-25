@@ -1,10 +1,7 @@
 {
-	"name": "Wisebot",
+	"name": "wisebot-monorepo",
 	"verbose": true,
+	"preset": "ts-jest",
 	"testEnvironment": "node",
-	"moduleFileExtensions": ["mjs", "js", "json"],
-	"testRegex": "./packages/[^/]+/test/.+\\.test\\.mjs$",
-	"transform": {
-		"^.+\\.mjs$": "babel-jest"
-	}
+	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"]
 }
